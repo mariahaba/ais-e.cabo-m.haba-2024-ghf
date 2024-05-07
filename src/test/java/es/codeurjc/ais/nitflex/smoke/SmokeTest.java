@@ -10,13 +10,26 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SmokeTest {
+
+    private WebDriver driver;
+
+    @BeforeEach
+    public void setup() {
+        driver = new ChromeDriver();
+    }
+
     @Test
     public void testWelcomeMessage() {
+        // Obtiene la URL de la aplicación desplegada desde las propiedades del sistema
         String host = System.getProperty("host");
         if (host == null) {
             throw new IllegalStateException("Host URL must be provided.");
         }
-        
+
+        // Navega a la URL de la aplicación
+        driver.get(host);
+
+        // Encuentra el elemento que contiene el mensaje de bienvenida y verifica su contenido
         String welcomeMessage = driver.findElement(By.class("ui header")).getText();
         assertEquals("Welcome to Nitflex", welcomeMessage, "Welcome message is not correct");
     }
