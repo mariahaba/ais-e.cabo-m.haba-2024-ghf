@@ -1,9 +1,6 @@
 name: Ejecución de Pruebas Unitarias e Integración
 on:
   push:
-    branches:
-      - ''
-      - '!main'
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -14,4 +11,4 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - run: mvn src/test/java/es/codeurjc/ais/nitflex
+    - run: mvn test
