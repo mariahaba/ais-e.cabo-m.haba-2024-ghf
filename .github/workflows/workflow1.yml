@@ -14,5 +14,8 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - run: mvn test -Dtest=UrlUtilsIntegrationTest
+    - name: Run test de integracion  
+      run: mvn test -Dtest=UrlUtilsIntegrationTest
+    - name: Run test unitario
+      run: mvn test -Dtest=FilmServiceUnitaryTest
     
