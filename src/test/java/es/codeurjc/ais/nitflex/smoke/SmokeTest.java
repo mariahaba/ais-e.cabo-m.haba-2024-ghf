@@ -30,7 +30,7 @@ public class SmokeTest {
         driver.get(host);
 
         // Encuentra el elemento que contiene el mensaje de bienvenida y verifica su contenido
-        String welcomeMessage = driver.findElement(By.class("ui header")).getText();
+        String welcomeMessage = driver.findElement(By.className("ui header")).getText();
         assertEquals("Welcome to Nitflex", welcomeMessage, "Welcome message is not correct");
     }
 }
