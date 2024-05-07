@@ -12,14 +12,6 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Set up Chrome browser
-      uses: browser-actions/setup-chrome@v1
-      with:
-        chrome-version: 'latest'
-
-    - name: Set up ChromeDriver
-      uses: browser-actions/setup-chromedriver@v1
-
     - name: Run test de integracion  
       run: mvn test -Dtest=UrlUtilsIntegrationTest
     - name: Run test unitario
