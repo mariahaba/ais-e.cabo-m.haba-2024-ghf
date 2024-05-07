@@ -17,7 +17,7 @@ public class SmokeTest {
     public void setup() {
         driver = new ChromeDriver();
     }
-
+// jhvljv
     @Test
     public void testWelcomeMessage() {
         String host = System.getProperty("host");
