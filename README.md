@@ -1,6 +1,6 @@
 # AIS-Practicas-4y5-2024
 
-Autor(es): Michel Maes Bermejo
+Autor(es): Elisa Cabo y María Haba
 
 [Repositorio](https://github.com/URJC-AIS/AIS-Practicas-4y5-2024-template)
 
