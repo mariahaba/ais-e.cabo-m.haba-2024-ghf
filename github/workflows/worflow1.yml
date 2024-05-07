@@ -1,1 +1,29 @@
+name: Ejecución de Pruebas Unitarias e Integración
+on:
+  push:
+    branches:
+      - ''
+      - '!main'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-m2
+    - name: Run unit tests
+      run: mvn test -FilmServiceUnitaryTest=UnitTest
+    - name: Run integration tests
+      run: mvn test -UrlUtilsIntegrationTest=IntegrationTest
 
