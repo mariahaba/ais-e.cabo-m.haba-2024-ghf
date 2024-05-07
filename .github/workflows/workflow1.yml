@@ -2,7 +2,7 @@ name: Ejecución de Pruebas Unitarias e Integración
 on:
   push:
     branches:
-      - '**'
+      - '*'
       - '!main'
 jobs:
   test:
@@ -18,4 +18,3 @@ jobs:
       run: mvn test -Dtest=UrlUtilsIntegrationTest
     - name: Run test unitario
       run: mvn test -Dtest=FilmServiceUnitaryTest
-    
