@@ -14,4 +14,4 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - run: mvn test
+    - run: mvn src/test/java/es/codeurjc/ais/nitflex
