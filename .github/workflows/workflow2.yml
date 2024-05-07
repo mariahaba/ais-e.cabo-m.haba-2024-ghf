@@ -17,4 +17,4 @@ jobs:
     - name: Run test unitario
       run: mvn test -Dtest=FilmServiceUnitaryTest
     - name: Run test de sistema
-      run: mvn test -Dtest=SmokeTest
+      run: mvn test -Dhost=<8080> -Dtest=SmokeTest
