@@ -11,5 +11,5 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - run: mvn src/test/java/es/codeurjc/ais/nitflex/integration/UrlUtilsIntegrationTest.java
+    - run: mvn test -Dtest=UrlUtilsIntegrationTest
     
