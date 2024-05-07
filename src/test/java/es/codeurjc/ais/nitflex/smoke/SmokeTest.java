@@ -16,7 +16,7 @@ public class SmokeTest {
 
     @BeforeEach
     public void setup() {
-        driver = new EdgeDriver();
+        driver = new ChromeDriver();
     }
 
     @Test
