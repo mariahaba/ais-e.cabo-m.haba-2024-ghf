@@ -18,7 +18,7 @@ import java.time.Duration;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SmokeTest {
-	
+	// jgvljv
 	@LocalServerPort
     int port;
 
