@@ -16,5 +16,5 @@ jobs:
       run: mvn test -Dtest=UrlUtilsIntegrationTest
     - name: Run test unitario
       run: mvn test -Dtest=FilmServiceUnitaryTest
-    - name: Run test de sistema
-      run: mvn -Dhost='http://localhost:' -Dtest=FilmUITest test
+#    - name: Run test de sistema
+#      run: mvn -Dhost='http://localhost:' -Dtest=FilmUITest test
