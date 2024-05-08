@@ -1,9 +1,9 @@
-name: TRES 
+name: Despliegue y Publicación en Producción 
 on:
-  pull_request:
+  push:
     branches: [ main ]
 jobs:
-  test:
+  deploy_and_test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -12,9 +12,36 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Run test de integracion  
-      run: mvn test -Dtest=UrlUtilsIntegrationTest
-    - name: Run test unitario
-      run: mvn test -Dtest=FilmServiceUnitaryTest
+        
+    - name: Build en Maven 
+      run: mvn package -DskipTests
+
+    - name: Construir imagen - Docker 
+      run: docker build -t myorg/nitflex:${{ github.sha }} .
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Push Docker image to Docker Hub
+      run: docker push myorg/nitflex:${{ github.sha }}
+
+    - name: Deploy to Azure
+      uses: azure/docker-login@v1
+      with:
+        login-server: mycontainerregistry.azurecr.io
+        username: ${{ secrets.AZURE_REGISTRY_USERNAME }}
+        password: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
+    - run: |
+        az webapp create --resource-group myResourceGroup --plan myAppServicePlan --name nitflex --deployment-container-image-name mycontainerregistry.azurecr.io/nitflex:${{ github.sha }}
+      
     - name: Run test de sistema
-      run: mvn test -Dtest=SmokeTest -Dhost="localhost:8080"
+      run: mvn -Dhost=http://xxxxx.azurecontainer.io:8080 -Dtest=SmokeTest#testWelcomeMessage test
+
+
+#    - name: Run smoke tests
+#      env:
+#        HOST: ${{ steps.deploy.outputs.application-url }}
+#      run: mvn -Dtest=SmokeTest -Dhost=$HOST test
