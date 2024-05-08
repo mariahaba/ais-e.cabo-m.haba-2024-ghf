@@ -43,7 +43,7 @@ jobs:
       run: mvn -Dhost=http://xxxxx.azurecontainer.io:8080 -Dtest=SmokeTest#testWelcomeMessage test
 
 
-#    - name: Run smoke tests
+#    - name: Run smoke tests  ñ
 #      env:
 #        HOST: ${{ steps.deploy.outputs.application-url }}
 #      run: mvn -Dtest=SmokeTest -Dhost=$HOST test
