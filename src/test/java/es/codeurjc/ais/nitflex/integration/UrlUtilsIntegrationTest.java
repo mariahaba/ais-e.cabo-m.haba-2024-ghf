@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.web.server.ResponseStatusException;
 
 import es.codeurjc.ais.nitflex.utils.UrlUtils;
-
 @DisplayName("Url Utils integration tests")
 public class UrlUtilsIntegrationTest {
 
