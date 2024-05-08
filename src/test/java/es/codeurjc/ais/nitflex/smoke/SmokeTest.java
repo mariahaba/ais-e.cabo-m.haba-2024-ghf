@@ -6,11 +6,21 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
+
+import es.codeurjc.ais.nitflex.Application;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.Duration;
+
+@SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SmokeTest {
+	
+	@LocalServerPort
+    int port;
 
     private WebDriver driver;
 
@@ -26,6 +36,7 @@ public class SmokeTest {
         if (host == null) {
             throw new IllegalStateException("Host URL must be provided.");
         }
+        host = host + +this.port+"/";
 
         // Navega a la URL de la aplicación
         driver.get(host);
