@@ -31,17 +31,12 @@ public class SmokeTest {
 
     @Test
     public void testWelcomeMessage() {
-        // Obtiene la URL de la aplicación desplegada desde las propiedades del sistema
         String host = System.getProperty("host");
         if (host == null) {
             throw new IllegalStateException("Host URL must be provided.");
         }
         host = host + +this.port+"/";
-
-        // Navega a la URL de la aplicación
         driver.get(host);
-
-        // Encuentra el elemento que contiene el mensaje de bienvenida y verifica su contenido
         String welcomeMessage = driver.findElement(By.className("ui header")).getText();
         assertEquals("Welcome to Nitflex", welcomeMessage, "Welcome message is not correct");
     }
