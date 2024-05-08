@@ -12,7 +12,8 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-# test 
+    - name: Run test de sistema
+      run: mvn test -Dhost=http://xxxxx.azurecontainer.io:8080 -Dtest=SmokeTest 
     - name: Generate Docker image
       run: mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=${{ secrets.DOCKERHUB_USERNAME }}/anuncios:v1
     - name: Login to DockerHub
