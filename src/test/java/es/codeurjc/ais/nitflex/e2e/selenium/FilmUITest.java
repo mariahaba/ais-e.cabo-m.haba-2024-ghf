@@ -45,28 +45,19 @@ public class FilmUITest {
     @DisplayName("Añadir una nueva película y comprobar que se ha creado")
 	public void createFilmTest() throws Exception {
 
-        // GIVEN: Partiendo de que estamos en la página principal de la web
         this.driver.get("http://localhost:"+this.port+"/");
-
-        // WHEN: Creamos un nueva película
 
         String title = "Spider-Man: No Way Home";
         String synopsis = "Peter Parker es desenmascarado y por tanto no es capaz de separar su vida normal de los enormes riesgos que conlleva ser un súper héroe.";
         String url = "https://www.themoviedb.org/t/p/w220_and_h330_face/osYbtvqjMUhEXgkuFJOsRYVpq6N.jpg";
         String year = "2021";
 
-        // Hacemos click en "New film"
         driver.findElement(By.xpath("//*[text()='New film']")).click();
-        // Rellenamos el formulario
         driver.findElement(By.name("title")).sendKeys(title);
         driver.findElement(By.name("url")).sendKeys(url);
         driver.findElement(By.name("releaseYear")).sendKeys(year);
         driver.findElement(By.name("synopsis")).sendKeys(synopsis);
-        // Enviamos el formulario
         driver.findElement(By.id("Save")).click();
-
-        // THEN: Esperamos que la película creada aparezca en la nueva página resultante
-
         this.wait.until(ExpectedConditions.textToBe(By.id("film-title"), title));
     }
 
