@@ -23,6 +23,7 @@ public class SmokeTest {
     int port;
 
     private WebDriver driver;
+    private WebDriverWait wait;
 
     @BeforeEach
     public void setup() {
