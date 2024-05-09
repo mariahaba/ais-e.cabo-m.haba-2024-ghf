@@ -25,16 +25,12 @@ public class SmokeTest {
     private WebDriver driver;
 
     @BeforeEach
-public void setup() {
-    ChromeOptions options = new ChromeOptions();
-    options.addArguments("--headless"); // Ejecutar sin interfaz gráfica
-    options.addArguments("--no-sandbox"); // Ejecutar sin sandbox para evitar problemas de permisos
-    options.addArguments("--disable-dev-shm-usage"); // Evitar problemas con el espacio de memoria limitado en docker
-    options.addArguments("--disable-gpu"); // Desactivar GPU, no necesaria en modo headless
-    options.addArguments("--remote-debugging-port=9222"); // Para depuración remota si es necesario
-
-    driver = new ChromeDriver(options);
-}
+    public void setup() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        this.driver = new ChromeDriver(options);
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+    }
 
     @Test
     public void testWelcomeMessage() {
