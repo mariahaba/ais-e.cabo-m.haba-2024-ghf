@@ -1,4 +1,5 @@
-name: Despliegue y Publicación en Producción 
+name: Despliegue y Publicación en Producción
+
 on:
   push:
     branches: [ main ]
@@ -50,6 +51,12 @@ jobs:
           --image ${{ secrets.DOCKERHUB_USERNAME }}/anuncios:v1 \
           --dns-name-label elisacaboymariahaba \
           --ports 8080
+
+      - name: Set up JDK 17 and Maven
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          maven-version: '3.8.1'
 
       - name: Run test de sistema
         run: mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest
