@@ -15,7 +15,7 @@ jobs:
         distribution: 'temurin'
         
     - name: Run test de sistema
-      run: mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest#testWelcomeMessage test    
+      run: mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest    
 
     - name: Generate Docker image
       run: mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=${{ secrets.DOCKERHUB_USERNAME }}/anuncios:v1
