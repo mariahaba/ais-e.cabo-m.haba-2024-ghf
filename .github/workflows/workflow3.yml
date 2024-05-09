@@ -50,7 +50,7 @@ jobs:
           --image ${{ secrets.DOCKERHUB_USERNAME }}/anuncios:v1 \
           --dns-name-label elisacaboymariahaba \
           --ports 8080
-
-  #    - name: Run test de sistema
-  #      run: mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest    
+          
+      - name: Run test de sistema
+        run: mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest    
 
