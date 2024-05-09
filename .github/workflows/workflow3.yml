@@ -3,12 +3,9 @@ on:
   push:
     branches: [ main ]
 
-
-# añadido nuevo por diapos
 permissions: 
   id-token: write
   contents: read 
-# hasta aqui 
 
 jobs:
   build:
@@ -21,7 +18,6 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
-        # distribution: 'temurin'
       
     - name: Generate Docker image
       run: mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=${{ secrets.DOCKERHUB_USERNAME }}/anuncios:v1
@@ -42,7 +38,8 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      - name: 'Run az commands to deploy container'
+
+      - name: 'Deploy container to Azure'
         run: |
           az container create \
           --resource-group ${{ secrets.AZURE_GROUP }} \
@@ -50,7 +47,15 @@ jobs:
           --image ${{ secrets.DOCKERHUB_USERNAME }}/anuncios:v1 \
           --dns-name-label elisacaboymariahaba \
           --ports 8080
-          
-      - name: Run test de sistema
-        run: mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest    
 
+      - name: 'Check application status'
+        run: |
+          echo "Checking if the application is ready..."
+          until $(curl --output /dev/null --silent --head --fail http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080); do
+            printf '.'
+            sleep 5
+          done
+          echo "Application is ready."
+
+      - name: 'Run Smoke Test'
+        run: mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest
