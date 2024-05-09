@@ -18,8 +18,8 @@ import java.time.Duration;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SmokeTest {
-	// jgvljv
-	@LocalServerPort
+	
+    @LocalServerPort
     int port;
 
     private WebDriver driver;
@@ -39,7 +39,7 @@ public class SmokeTest {
         if (host == null) {
             throw new IllegalStateException("Host URL must be provided.");
         }
-        host = host + +this.port+"/";
+        host = host + this.port + "/";
         driver.get(host);
         String welcomeMessage = driver.findElement(By.className("ui header")).getText();
         assertEquals("Welcome to Nitflex", welcomeMessage, "Welcome message is not correct");
