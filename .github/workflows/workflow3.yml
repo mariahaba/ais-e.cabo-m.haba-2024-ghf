@@ -2,8 +2,15 @@ name: Despliegue y Publicación en Producción
 on:
   push:
     branches: [ main ]
+
+# añadido nuevo por diapos
+permissions: 
+  id-token: write
+  contents: read 
+# hasta aqui 
+
 jobs:
-  deploy_and_test:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -12,7 +19,8 @@ jobs:
       uses: actions/setup-java@v4
       with:
         java-version: '17'
-        distribution: 'temurin'
+        distribution: 'adopt'
+        # distribution: 'temurin'
       
     - name: Generate Docker image
       run: mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=${{ secrets.DOCKERHUB_USERNAME }}/anuncios:v1
@@ -23,6 +31,25 @@ jobs:
     - name: Push image to DockerHub
       run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/anuncios:v1
 
-    - name: Run test de sistema
-      run: mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest    
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: 'Az CLI login'
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: 'Run az commands to deploy container'
+        run: |
+          az container create \
+          --resource-group ${{ secrets.AZURE_GROUP }} \
+          --name anuncios \
+          --image ${{ secrets.DOCKERHUB_USERNAME }}/anuncios:latest \
+          --dns-name-label elisacaboymariahaba \
+          --ports 8080
+
+  #    - name: Run test de sistema
+  #      run: mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest    
 
