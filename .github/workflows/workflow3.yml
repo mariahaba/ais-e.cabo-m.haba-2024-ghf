@@ -52,12 +52,5 @@ jobs:
           --dns-name-label elisacaboymariahaba \
           --ports 8080
 
-      # Instalar Maven
-      - name: Install Maven
-        run: |
-          wget https://apache.mirror.digionline.de/maven/maven-3/3.8.4/binaries/apache-maven-3.8.4-bin.tar.gz
-          tar -xf apache-maven-3.8.4-bin.tar.gz
-          export PATH="$PWD/apache-maven-3.8.4/bin:$PATH"
-
       - name: Run test de sistema
         run: mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest
