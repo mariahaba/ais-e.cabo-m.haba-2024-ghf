@@ -61,5 +61,6 @@ jobs:
 
       - name: Run system test
         run: |
+        # linea modificada 
           cd path/to/your/project
           mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest
