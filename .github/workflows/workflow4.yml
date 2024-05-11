@@ -1,8 +1,12 @@
-name: 4 - Pruebas de sistema nocturnas en producción
+name: Pruebas de sistema nocturnas en producción
 
 on:
-  schedule:
-    - cron: '0 0 * * *' 
+  push:
+    branches:
+      - main  # Cambia 'main' por tu rama principal si es diferente
+  pull_request:
+    branches:
+      - main  # Cambia 'main' por tu rama principal si es diferente
 
 jobs:
   test:
@@ -27,4 +31,3 @@ jobs:
 
       - name: Run system tests on ${{ matrix.browser }} on ${{ matrix.os }}
         run: mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dbrowser=${{ matrix.browser }} -Dos=${{ matrix.os }} -Dtest=SmokeTest
-        
