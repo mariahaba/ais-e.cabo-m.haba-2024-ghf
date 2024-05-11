@@ -1,23 +1,21 @@
-name: Pruebas de sistema nocturnas en producción
+name: Pruebas de sistema en producción
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
   push:
     branches:
       - main
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
+    runs-on: '${{ matrix.os }}'
 
     strategy:
       matrix:
         browser: ['chrome', 'firefox', 'edge', 'safari']
         os: 
-          - name: windows-latest
+          - name: 'windows-latest'
             browser_exclude: ['safari']
-          - name: macos-latest
+          - name: 'macos-latest'
             browser_exclude: ['chrome', 'firefox', 'edge']
 
     steps:
@@ -35,6 +33,5 @@ jobs:
 
       - name: Run system tests on ${{ matrix.browser }} on ${{ matrix.os }}
         run: |
-          # Establecer la propiedad del sistema "host"
           export host="http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080"
           mvn test -Dhost=$host -Dbrowser=${{ matrix.browser }} -Dos=${{ matrix.os }} -Dtest=SmokeTest
