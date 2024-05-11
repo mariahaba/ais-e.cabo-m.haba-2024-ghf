@@ -60,5 +60,5 @@ jobs:
 
       - name: Run system test
         run: |
-          cd github.com/mariahaba/ais-e.cabo-m.haba-2024-ghf/pom.xml
+          cd ais-e.cabo-m.haba-2024-ghf/pom.xml
           mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest
