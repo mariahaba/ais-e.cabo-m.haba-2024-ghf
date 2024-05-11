@@ -38,8 +38,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        # nose
-      
+        
       - name: Change to project directory
         run: cd path/to/your/project
       
@@ -61,6 +60,5 @@ jobs:
 
       - name: Run system test
         run: |
-        # linea modificada 
-          cd path/to/your/project
+          cd github.com/mariahaba/ais-e.cabo-m.haba-2024-ghf/pom.xml
           mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest
