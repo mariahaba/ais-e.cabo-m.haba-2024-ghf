@@ -1,20 +1,24 @@
 name: Pruebas de sistema nocturnas en producción
 
 on:
+  schedule:
+    - cron: '0 0 * * *'
   push:
     branches:
-      - main  # Cambia 'main' por tu rama principal si es diferente
-  pull_request:
-    branches:
-      - main  # Cambia 'main' por tu rama principal si es diferente
+      - main
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
         browser: ['chrome', 'firefox', 'edge', 'safari']
-        os: ['windows-latest', 'macos-latest', 'ubuntu-latest']
+        os: 
+          - name: windows-latest
+            browser_exclude: ['safari']
+          - name: macos-latest
+            browser_exclude: ['chrome', 'firefox', 'edge']
 
     steps:
       - name: Checkout repository
@@ -30,4 +34,7 @@ jobs:
         run: mvn install -DskipTests
 
       - name: Run system tests on ${{ matrix.browser }} on ${{ matrix.os }}
-        run: mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dbrowser=${{ matrix.browser }} -Dos=${{ matrix.os }} -Dtest=SmokeTest
+        run: |
+          # Establecer la propiedad del sistema "host"
+          export host="http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080"
+          mvn test -Dhost=$host -Dbrowser=${{ matrix.browser }} -Dos=${{ matrix.os }} -Dtest=SmokeTest
