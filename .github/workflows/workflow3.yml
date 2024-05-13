@@ -62,5 +62,7 @@ jobs:
             with:
               java-version: '17'
               distribution: 'temurin'
-          - name: Run test de sistema
-            run: mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest 
+          - name: Run Smoke Test
+            run: |
+              export host="http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080"
+              mvn test -Dhost=$host -Dtest=SmokeTest
