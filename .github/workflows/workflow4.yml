@@ -35,5 +35,5 @@ jobs:
       
       - name: Run system tests on ${{ matrix.browser }} on ${{ matrix.os }}
         run: |
-          export host="http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080"
-          mvn test -Dhost=$host -Dbrowser=${{ matrix.browser }} -Dos=${{ matrix.os }} -Dtest=SmokeTest
+          export HOST="http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080"
+          mvn test -Dhost=$HOST -Dbrowser=${{ matrix.browser }} -Dos=${{ matrix.os }} -Dtest=SmokeTest
