@@ -46,6 +46,5 @@ jobs:
 
       - name: Run Smoke Test
         run: |
-          $env:HOST="http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080"
-          mvn test -Dhost=$env:HOST -Dbrowser=${{ matrix.browser }} -Dtest=SmokeTest
+          mvn test -Dhost="http://localhost:8080" -Dbrowser=${{ matrix.browser }} -Dtest=SmokeTest
           shell: powershell
