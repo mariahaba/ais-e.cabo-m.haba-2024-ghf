@@ -51,15 +51,6 @@ jobs:
           --image ${{ secrets.DOCKERHUB_USERNAME }}/nitflex:v1 \
           --dns-name-label elisacaboymariahaba \
           --ports 8080
-          
-      - name: 'Check application status'
-        run: |
-          echo "Checking if the application is ready..."
-          until $(curl --output /dev/null --silent --head --fail http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080); do
-            printf '.'
-            sleep 5
-          done
-          echo "Application is ready."
-      - name: Run Smoke Test
-        run: |
-          mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest
+
+      - name: Run test de sistema
+        run: mvn test -Dhost=http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080 -Dtest=SmokeTest 
