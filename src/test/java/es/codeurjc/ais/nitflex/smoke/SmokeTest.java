@@ -24,6 +24,13 @@ public class SmokeTest {
 
     private WebDriver driver;
     private WebDriverWait wait;
+	
+    @AfterEach
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();  // Make sure to quit the driver to free resources.
+        }
+    }
 
     @BeforeEach
     public void setup() {
@@ -39,7 +46,6 @@ public class SmokeTest {
         if (host == null) {
             throw new IllegalStateException("Host URL must be provided.");
         }
-        host = host + this.port + "/";
         driver.get(host);
         String welcomeMessage = driver.findElement(By.className("ui header")).getText();
         assertEquals("Welcome to Nitflex", welcomeMessage, "Welcome message is not correct");
