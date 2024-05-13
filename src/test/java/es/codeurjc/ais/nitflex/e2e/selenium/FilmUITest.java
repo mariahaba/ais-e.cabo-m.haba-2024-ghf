@@ -34,11 +34,11 @@ public class FilmUITest {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
     }
 
-	@AfterEach
-	public void teardown() {
-		if (this.driver != null) {
-            this.driver.quit();
-		}
+     @AfterEach
+     public void teardown() {
+	if (this.driver != null) {
+        this.driver.quit();
+	}
     }
 
     @Test
