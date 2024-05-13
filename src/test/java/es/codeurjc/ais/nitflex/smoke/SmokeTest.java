@@ -47,7 +47,7 @@ public class SmokeTest {
             throw new IllegalStateException("Host URL must be provided.");
         }
         driver.get(host);
-        String welcomeMessage = driver.findElement(By.className("ui header")).getText();
+        String welcomeMessage = driver.findElement(By.cssSelector(".ui.header")).getText();
         assertEquals("Welcome to Nitflex", welcomeMessage, "Welcome message is not correct");
     }
 }
