@@ -4,11 +4,9 @@ on:
   push:
     branches: [main]
 
-# añadido nuevo por diapos
 permissions:
   id-token: write
   contents: read
-# hasta aqui
 
 jobs:
   build:
@@ -21,7 +19,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
-          # distribution: 'temurin'
 
       - name: Generate Docker image
         run: mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=${{ secrets.DOCKERHUB_USERNAME }}/nitflex:v1
