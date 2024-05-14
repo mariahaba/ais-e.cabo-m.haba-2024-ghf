@@ -1,19 +1,14 @@
-# AIS-Practicas-4y5-2024
+# MEMORIA PRÁCTICA 4 - DEFINICIÓN DE WORKFLOWS 
 
-Autor(es): Elisa Cabo y María Haba
+## Realizada por Elisa Cabo y María Haba
+### Datos adicionales de las alumnas: 
+<p>71323542J → e.cabo.2019@alumnos.urjc.es </p>
+<p>54197190J → m.haba.2019@alumnos.urjc.es </p>
 
-[Repositorio](https://github.com/URJC-AIS/AIS-Practicas-4y5-2024-template)
+## URL del repositorio de GitHub
+<p>https://github.com/mariahaba/ais-e.cabo-m.haba-2024-ghf</p>
 
-[Aplicación Azure](http://ais-nitflex.westeurope.azurecontainer.io:8080)
+## URL de la aplicación desplegada en Azure
+<p>http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080</p>
 
-## Desarrollo con GitHubFlow (Práctica 5)
-
-Una vez creados los workflows y funcionando estos, pasamos a crear la nueva funcionalidad utilizando GithubFlow:
-
-Clonamos el repositorio
-
-```
-$ git clone ...
-....
-
-Ejemplo de un enlace en Markdown: [Workflow 1](https://github.com/URJC-AIS/continuous-deployment-azure/actions/runs/8746724116)
+![Captura de pantalla](ContenedorAzure.png)
