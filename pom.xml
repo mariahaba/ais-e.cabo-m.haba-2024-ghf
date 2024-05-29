@@ -77,6 +77,9 @@
 				<groupId>io.github.git-commit-id</groupId>
 				<artifactId>git-commit-id-maven-plugin</artifactId>
 				<configuration>
+					<includes>
+           					 <include>**/CustomFilmUITest.java</include>
+        				</includes>
 					<!-- this is false by default, forces the plugin to generate the git.properties file -->
 					<generateGitPropertiesFile>true</generateGitPropertiesFile>
 					<!-- The path for the properties file to be generated. See Super Pom for default variable reference https://maven.apache.org/guides/introduction/introduction-to-the-pom.html -->
