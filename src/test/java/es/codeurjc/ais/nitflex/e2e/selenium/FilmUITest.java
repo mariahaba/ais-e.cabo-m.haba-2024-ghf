@@ -32,7 +32,6 @@ public class FilmUITest {
         options.addArguments("--headless");
         this.driver = new ChromeDriver(options);
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-	@BeforeEach
     	String browser = System.getProperty("browser", "chrome");
     	switch (browser.toLowerCase()) {
         	case "firefox":
