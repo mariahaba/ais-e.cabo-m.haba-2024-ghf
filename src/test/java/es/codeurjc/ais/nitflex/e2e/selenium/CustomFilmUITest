@@ -1,3 +1,5 @@
+package es.codeurjc.ais.nitflex.e2e.selenium;
+
 public class CustomFilmUITest extends FilmUITest {
     @Override
     public void setUp() {
