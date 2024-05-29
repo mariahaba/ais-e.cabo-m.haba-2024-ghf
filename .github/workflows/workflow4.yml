@@ -40,8 +40,7 @@ jobs:
         shell: bash
 
       - name: Run System Tests
-        run: mvn test -Dtest=CustomFilmUITest -Dbrowser=${{ matrix.browser }}
-
+        run: mvn test -Dtest=FilmUITest -Dbrowser=${{ env.BROWSER }}
         env:
           HOST: "http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080"
 
