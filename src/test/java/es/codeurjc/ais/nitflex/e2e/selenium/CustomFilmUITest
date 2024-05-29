@@ -1,0 +1,7 @@
+public class CustomFilmUITest extends FilmUITest {
+    @Override
+    public void setUp() {
+        String browser = System.getProperty("browser");
+        // Configurar WebDriver según el navegador especificado
+    }
+}
