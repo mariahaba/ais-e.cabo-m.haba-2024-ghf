@@ -32,6 +32,25 @@ public class FilmUITest {
         options.addArguments("--headless");
         this.driver = new ChromeDriver(options);
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+	@BeforeEach
+    	String browser = System.getProperty("browser", "chrome");
+    	switch (browser.toLowerCase()) {
+        	case "firefox":
+           	 	System.setProperty("webdriver.gecko.driver", "/path/to/geckodriver");
+            		driver = new FirefoxDriver();
+            	break;
+        	case "edge":
+            		System.setProperty("webdriver.edge.driver", "/path/to/edgedriver");
+            		driver = new EdgeDriver();
+            	break;
+        	case "chrome":
+        	default:
+           	 	System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
+          	 	driver = new ChromeDriver();
+           	 break;
+    }
+}
+    
     }
 
      @AfterEach
