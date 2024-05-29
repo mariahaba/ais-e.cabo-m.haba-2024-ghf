@@ -47,10 +47,9 @@ public class FilmUITest {
            	 	System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
           	 	driver = new ChromeDriver();
            	 break;
-    }
-}
+    	}
+ }
     
-    }
 
      @AfterEach
      public void teardown() {
