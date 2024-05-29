@@ -1,9 +1,44 @@
-package es.codeurjc.ais.nitflex.e2e.selenium;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.safari.SafariDriver;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 public class CustomFilmUITest extends FilmUITest {
+
+    @BeforeEach
     @Override
     public void setUp() {
-        String browser = System.getProperty("browser");
-        // Configurar WebDriver según el navegador especificado
+        String browserType = System.getProperty("browser", "chrome").toLowerCase();
+        switch (browserType) {
+            case "firefox":
+                System.setProperty("webdriver.gecko.driver", "path/to/geckodriver");
+                driver = new FirefoxDriver();
+                break;
+            case "edge":
+                System.setProperty("webdriver.edge.driver", "path/to/edgedriver");
+                driver = new EdgeDriver();
+                break;
+            case "safari":
+                // Safari setup is generally auto-configured on Macs
+                driver = new SafariDriver();
+                break;
+            case "chrome":
+            default:
+                System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+                driver = new ChromeDriver();
+                break;
+        }
+        super.setUp(); // Call to super class setUp to maintain any additional setup defined there
     }
-}
+
+    @AfterEach
+    @Override
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+        super.tearDown(); // Ensure any
+
