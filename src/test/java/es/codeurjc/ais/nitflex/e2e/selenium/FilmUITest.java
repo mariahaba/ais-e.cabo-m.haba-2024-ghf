@@ -34,10 +34,6 @@ public class FilmUITest {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
     	String browser = System.getProperty("browser", "chrome");
     	switch (browser.toLowerCase()) {
-        	case "firefox":
-           	 	System.setProperty("webdriver.gecko.driver", "/path/to/geckodriver");
-            		driver = new FirefoxDriver();
-            	break;
         	case "edge":
             		System.setProperty("webdriver.edge.driver", "/path/to/edgedriver");
             		driver = new EdgeDriver();
