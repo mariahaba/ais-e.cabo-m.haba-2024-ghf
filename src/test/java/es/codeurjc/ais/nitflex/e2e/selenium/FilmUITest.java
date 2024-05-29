@@ -28,11 +28,28 @@ public class FilmUITest {
 
     @BeforeEach
     public void setup() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        this.driver = new ChromeDriver(options);
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-   }
+    String browser = System.getProperty("browser", "chrome").toLowerCase();
+    switch (browser) {
+        case "firefox":
+            System.setProperty("webdriver.gecko.driver", "/path/to/geckodriver");
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.addArguments("--headless");
+            this.driver = new FirefoxDriver(firefoxOptions);
+            break;
+        case "edge":
+            System.setProperty("webdriver.edge.driver", "/path/to/edgedriver");
+            this.driver = new EdgeDriver();
+            break;
+        case "chrome":
+        default:
+            System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("--headless"); // Adding headless as was previously configured
+            this.driver = new ChromeDriver(chromeOptions);
+            break;
+    }
+    this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+}
     
 
      @AfterEach
