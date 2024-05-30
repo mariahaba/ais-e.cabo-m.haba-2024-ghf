@@ -2,17 +2,16 @@ name: 4 - Pruebas de sistema nocturnas en producción
 
 on:
   schedule:
-    - cron: '0 0 * * *' 
-    
+  - cron: '0 0 * * *' 
+
 jobs:
   test:
     strategy:
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
-        browser: ['chrome', 'firefox', 'edge', 'safari']
+        browser: ['chrome', 'firefox']
       fail-fast: false
 
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
@@ -24,53 +23,23 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Install browsers on Windows
-        if: runner.os == 'Windows'
+      - name: Install Chrome and ChromeDriver (for Chrome)
+        if: matrix.browser == 'chrome'
         run: |
-          if [ ${{ matrix.browser }} == 'chrome' ]; then
-            choco install googlechrome
-            choco install chromedriver
-          elif [ ${{ matrix.browser }} == 'firefox' ]; then
-            choco install firefox
-            choco install selenium-gecko-driver
-          elif [ ${{ matrix.browser }} == 'edge' ]; then
-            choco install microsoft-edge
-            choco install msedgedriver
-          fi
+          choco install googlechrome
+          choco install chromedriver
 
-      - name: Install browsers on macOS
-        if: runner.os == 'macOS'
+      - name: Install Firefox and GeckoDriver (for Firefox)
+        if: matrix.browser == 'firefox'
         run: |
-          if [ ${{ matrix.browser }} == 'chrome' ]; then
-            brew install --cask google-chrome
-            brew install chromedriver
-          elif [ ${{ matrix.browser }} == 'firefox' ]; then
-            brew install --cask firefox
-            brew install geckodriver
-          elif [ ${{ matrix.browser }} == 'safari' ]; then
-            echo "Safari is pre-installed on macOS"
-          elif [ ${{ matrix.browser }} == 'edge' ]; then
-            brew install --cask microsoft-edge
-            brew install msedgedriver
-          fi
-
-      - name: Install browsers on Linux
-        if: runner.os == 'Linux'
-        run: |
-          if [ ${{ matrix.browser }} == 'chrome' ]; then
-            sudo apt-get update
-            sudo apt-get install -y google-chrome-stable
-            sudo apt-get install -y chromium-chromedriver
-          elif [ ${{ matrix.browser }} == 'firefox' ]; then
-            sudo apt-get update
-            sudo apt-get install -y firefox
-            sudo apt-get install -y geckodriver
-          elif [ ${{ matrix.browser }} == 'edge' ]; then
-            sudo apt-get update
-            sudo apt-get install -y microsoft-edge-stable
-            sudo apt-get install -y msedgedriver
-          fi
+          choco install firefox
+          choco install selenium-gecko-driver
 
       - name: Run Smoke Test
         run: |
-          mvn test -Dhost="http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080" -Dbrowser=${{ matrix.browser }} -Dtest=FilmUITestWithBrowsers
+          mvn test -Dhost="http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080" -Dbrowser=${{ matrix.browser }} -Dtest=SmokeTest
+
+      - name: Run System Tests
+        run: mvn test -Dtest=FilmUITest -Dbrowser=${{ env.BROWSER }}
+        env:
+          HOST: "http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080"
