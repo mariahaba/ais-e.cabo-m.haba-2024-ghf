@@ -1,3 +1,4 @@
+package es.codeurjc.ais.nitflex.e2e.selenium;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.By;
