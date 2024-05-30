@@ -12,8 +12,8 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest] # macOS para Safari si es necesario en el futuro
-        browser: [chrome, firefox, edge] # Safari se omite por incompatibilidad con Windows y Linux
+        os: [windows-latest, ubuntu-latest] 
+        browser: [chrome, firefox, edge] 
       fail-fast: false
 
     runs-on: ${{ matrix.os }}
