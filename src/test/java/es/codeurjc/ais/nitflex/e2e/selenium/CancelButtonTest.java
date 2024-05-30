@@ -13,7 +13,7 @@ public class CancelButtonTest {
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
         driver = new ChromeDriver();
-        driver.get("http://localhost:8080/editFilmPage.html"); 
+        driver.get("http://localhost:8080/editFilmPage"); 
     }
 
     @Test
