@@ -14,7 +14,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CancelButtonTest {
 
@@ -42,7 +41,7 @@ public class CancelButtonTest {
         // Asegúrate de que la URL sea correcta para tu entorno de prueba
         driver.get("http://localhost:" + port + "/editFilmPage");
 
-        WebElement cancelButton = driver.findElement(By.cssSelector("button.ui.button"));
+        WebElement cancelButton = driver.findElement(By.cssSelector("ui.button"));
         cancelButton.click();
         
         // Espera para que la redirección se complete y verifica que la URL sea la de inicio
