@@ -8,6 +8,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public class FilmUITestWithBrowsers extends FilmUITest {
