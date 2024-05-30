@@ -17,7 +17,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 
 import es.codeurjc.ais.nitflex.Application;
 
-
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class FilmUITest {
 
@@ -33,8 +32,7 @@ public class FilmUITest {
         options.addArguments("--headless");
         this.driver = new ChromeDriver(options);
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-   }
-    
+    }
 
      @AfterEach
      public void teardown() {
