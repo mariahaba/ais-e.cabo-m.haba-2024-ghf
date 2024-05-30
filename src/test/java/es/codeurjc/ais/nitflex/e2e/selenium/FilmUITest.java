@@ -17,7 +17,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 
 import es.codeurjc.ais.nitflex.Application;
 
-@ExtendWith(SpringExtension.class)
+
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class FilmUITest {
 
