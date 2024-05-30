@@ -11,7 +11,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
+import org.openqa.selenium.WebElement;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -41,7 +41,7 @@ public class CancelButtonTest {
         // Asegúrate de que la URL sea correcta para tu entorno de prueba
         driver.get("http://localhost:" + port + "/editFilmPage");
 
-        WebElement cancelButton = driver.findElement(By.cssSelector("ui.button"));
+        WebElement cancelButton = driver.findElement(By.cssSelector("button.ui.button"));
         cancelButton.click();
         
         // Espera para que la redirección se complete y verifica que la URL sea la de inicio
