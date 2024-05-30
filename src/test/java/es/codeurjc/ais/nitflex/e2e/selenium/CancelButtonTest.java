@@ -13,6 +13,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.openqa.selenium.WebElement;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import es.codeurjc.ais.nitflex.Application;
+
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CancelButtonTest {
