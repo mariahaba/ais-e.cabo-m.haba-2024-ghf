@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 public class CancelButtonTest {
     private WebDriver driver;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
         driver = new ChromeDriver();
@@ -23,7 +23,7 @@ public class CancelButtonTest {
         assertEquals("http://localhost:8080/", driver.getCurrentUrl());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (driver != null) {
             driver.quit();
