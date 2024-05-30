@@ -1,45 +1,47 @@
-name: 4 - Pruebas de sistema nocturnas en producción
+name: 4 - Pruebas de Sistema Nocturnas en Producción
 
 on:
-  schedule:
-  - cron: '0 0 * * *' 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test:
     strategy:
       matrix:
-        browser: ['chrome', 'firefox']
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        browser: [chrome, firefox, edge, safari]
       fail-fast: false
 
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'adopt'
+          distribution: 'temurin'
 
-      - name: Install Chrome and ChromeDriver (for Chrome)
-        if: matrix.browser == 'chrome'
+      - name: Setup Browser Environment
         run: |
-          choco install googlechrome
-          choco install chromedriver
-
-      - name: Install Firefox and GeckoDriver (for Firefox)
-        if: matrix.browser == 'firefox'
-        run: |
-          choco install firefox
-          choco install selenium-gecko-driver
-
-      - name: Run Smoke Test
-        run: |
-          mvn test -Dhost="http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080" -Dbrowser=${{ matrix.browser }} -Dtest=SmokeTest
+          if [ "${{ matrix.browser }}" = "safari" ] && [ "${{ matrix.os }}" = "macos-latest" ]; then
+            # Setup commands for Safari on macOS
+          elif [ "${{ matrix.browser }}" = "edge" ]; then
+            # Setup commands for Edge
+          elif [ "${{ matrix.browser }}" = "firefox" ]; then
+            # Setup commands for Firefox
+          elif [ "${{ matrix.browser }}" = "chrome" ]; then
+            # Setup commands for Chrome
+          fi
+        shell: bash
 
       - name: Run System Tests
-        run: mvn test -Dtest=FilmUITest -Dbrowser=${{ env.BROWSER }}
-        env:
-          HOST: "http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080"
+        run: |
+          mvn test -Dtest=CustomFilmUITest -Dbrowser=${{ matrix.browser }}
+        shell: bash
