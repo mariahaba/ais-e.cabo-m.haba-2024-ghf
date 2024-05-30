@@ -1,25 +1,29 @@
-package es.codeurjc.ais.nitflex.e2e.selenium;
-
-import java.time.Duration;
-
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.safari.SafariDriver;
 
-import es.codeurjc.ais.nitflex.Application;
+import java.util.concurrent.TimeUnit;
 
 public class FilmUITestWithBrowsers extends FilmUITest {
-    @Parameters("browser")
-    public void setUp(@Optional("chrome") String browser) {
+
+    private WebDriver driver;
+
+    @BeforeEach
+    public void setUp() {
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"chrome", "firefox", "edge", "safari"})
+    public void setUp(String browser) {
         if (browser.equalsIgnoreCase("chrome")) {
             System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
             driver = new ChromeDriver();
@@ -34,8 +38,11 @@ public class FilmUITestWithBrowsers extends FilmUITest {
         }
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
+
     @Test
     public void runAllTests() {
-        super.runAllTests();
+        super.testCreateFilm();
+        super.testEditFilm();
+        super.testDeleteFilm();
     }
 }
