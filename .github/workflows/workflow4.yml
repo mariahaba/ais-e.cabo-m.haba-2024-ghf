@@ -1,6 +1,9 @@
-name: 4 - Pruebas de Sistema Nocturnas en Producción
+name: 4 - Pruebas de sistema nocturnas en producción
 
 on:
+  schedule:
+  - cron: '0 0 * * *' 
+
   push:
     branches:
       - main
@@ -12,36 +15,33 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
-        browser: [chrome, firefox, edge, safari]
+        browser: ['chrome', 'firefox']
       fail-fast: false
 
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v2
         with:
           java-version: '17'
-          distribution: 'temurin'
+          distribution: 'adopt'
 
-      - name: Setup Browser Environment
+      - name: Install Chrome and ChromeDriver (for Chrome)
+        if: matrix.browser == 'chrome'
         run: |
-          if [ "${{ matrix.browser }}" = "safari" ] && [ "${{ matrix.os }}" = "macos-latest" ]; then
-            # Setup commands for Safari on macOS
-          elif [ "${{ matrix.browser }}" = "edge" ]; then
-            # Setup commands for Edge
-          elif [ "${{ matrix.browser }}" = "firefox" ]; then
-            # Setup commands for Firefox
-          elif [ "${{ matrix.browser }}" = "chrome" ]; then
-            # Setup commands for Chrome
-          fi
-        shell: bash
+          choco install googlechrome
+          choco install chromedriver
 
-      - name: Run System Tests
+      - name: Install Firefox and GeckoDriver (for Firefox)
+        if: matrix.browser == 'firefox'
         run: |
-          mvn test -Dtest=CustomFilmUITest -Dbrowser=${{ matrix.browser }}
-        shell: bash
+          choco install firefox
+          choco install selenium-gecko-driver
+
+      - name: Run Smoke Test
+        run: |
+          mvn test -Dhost="http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080" -Dbrowser=${{ matrix.browser }} -Dtest=SmokeTest
