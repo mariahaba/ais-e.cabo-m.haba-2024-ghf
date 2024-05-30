@@ -42,11 +42,10 @@ public class CancelButtonTest {
         // Asegúrate de que la URL sea correcta para tu entorno de prueba
         driver.get("http://localhost:" + port + "/editFilmPage");
 
-        WebElement cancelButton = driver.findElement(By.id("cancel-button"));
+        WebElement cancelButton = driver.findElement(By.cssSelector("button.ui.button"));
         cancelButton.click();
         
-        // Asume que al hacer clic en cancelar, se redirige al usuario a la página de inicio o una página específica
-        String expectedUrl = "http://localhost:" + port + "/"; // Ajusta según la lógica de tu aplicación
-        assertEquals(expectedUrl, driver.getCurrentUrl(), "The cancel button did not redirect to the expected URL.");
+        // Espera para que la redirección se complete y verifica que la URL sea la de inicio
+        assertEquals("http://localhost:" + port + "/", driver.getCurrentUrl(), "The cancel button did not redirect to the home page as expected.");
     }
 }
