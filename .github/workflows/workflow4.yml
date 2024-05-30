@@ -1,9 +1,6 @@
 name: 4 - Pruebas de sistema nocturnas en producción
 
 on:
-  schedule:
-  - cron: '0 0 * * *' 
-
   push:
     branches:
       - main
@@ -15,10 +12,11 @@ jobs:
   test:
     strategy:
       matrix:
-        browser: ['chrome', 'firefox']
+        os: [windows-latest, ubuntu-latest] # macOS para Safari si es necesario en el futuro
+        browser: [chrome, firefox, edge] # Safari se omite por incompatibilidad con Windows y Linux
       fail-fast: false
 
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout repository
@@ -28,20 +26,20 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
-          distribution: 'adopt'
+          distribution: 'temurin'
 
-      - name: Install Chrome and ChromeDriver (for Chrome)
-        if: matrix.browser == 'chrome'
+      - name: Setup Browser Environment
         run: |
-          choco install googlechrome
-          choco install chromedriver
+          if [ "${{ matrix.browser }}" = "chrome" ]; then
+            echo "BROWSER=chrome" >> $GITHUB_ENV
+          elif [ "${{ matrix.browser }}" = "firefox" ]; then
+            echo "BROWSER=firefox" >> $GITHUB_ENV
+          elif [ "${{ matrix.browser }}" = "edge" ]; then
+            echo "BROWSER=edge" >> $GITHUB_ENV
+          fi
+        shell: bash
 
-      - name: Install Firefox and GeckoDriver (for Firefox)
-        if: matrix.browser == 'firefox'
-        run: |
-          choco install firefox
-          choco install selenium-gecko-driver
-
-      - name: Run Smoke Test
-        run: |
-          mvn test -Dhost="http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080" -Dbrowser=${{ matrix.browser }} -Dtest=SmokeTest
+      - name: Run System Tests
+        run: mvn test -Dtest=FilmUITest -Dbrowser=${{ env.BROWSER }}
+        env:
+          HOST: "http://elisacaboymariahaba.h3ffe9c9bsbgemeq.westeurope.azurecontainer.io:8080"
