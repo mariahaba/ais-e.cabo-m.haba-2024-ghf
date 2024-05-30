@@ -1,19 +1,15 @@
 name: 4 - Pruebas de sistema nocturnas en producción
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
+  schedule:
+    - cron: '0 0 * * *' 
+    
 jobs:
   test:
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest] # macOS para Safari si es necesario en el futuro
-        browser: [chrome, firefox, edge] # Safari se omite por incompatibilidad con Windows y Linux
+        os: [windows-latest, macos-latest, ubuntu-latest]
+        browser: ['chrome', 'firefox', 'edge', 'safari']
       fail-fast: false
 
     runs-on: ${{ matrix.os }}
@@ -26,18 +22,54 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
-          distribution: 'temurin'
+          distribution: 'adopt'
 
-      - name: Setup Browser Environment
+      - name: Install browsers on Windows
+        if: runner.os == 'Windows'
         run: |
-          if [ "${{ matrix.browser }}" = "chrome" ]; then
-            echo "BROWSER=chrome" >> $GITHUB_ENV
-          elif [ "${{ matrix.browser }}" = "firefox" ]; then
-            echo "BROWSER=firefox" >> $GITHUB_ENV
-          elif [ "${{ matrix.browser }}" = "edge" ]; then
-            echo "BROWSER=edge" >> $GITHUB_ENV
+          if [ ${{ matrix.browser }} == 'chrome' ]; then
+            choco install googlechrome
+            choco install chromedriver
+          elif [ ${{ matrix.browser }} == 'firefox' ]; then
+            choco install firefox
+            choco install selenium-gecko-driver
+          elif [ ${{ matrix.browser }} == 'edge' ]; then
+            choco install microsoft-edge
+            choco install msedgedriver
           fi
-        shell: bash
+
+      - name: Install browsers on macOS
+        if: runner.os == 'macOS'
+        run: |
+          if [ ${{ matrix.browser }} == 'chrome' ]; then
+            brew install --cask google-chrome
+            brew install chromedriver
+          elif [ ${{ matrix.browser }} == 'firefox' ]; then
+            brew install --cask firefox
+            brew install geckodriver
+          elif [ ${{ matrix.browser }} == 'safari' ]; then
+            echo "Safari is pre-installed on macOS"
+          elif [ ${{ matrix.browser }} == 'edge' ]; then
+            brew install --cask microsoft-edge
+            brew install msedgedriver
+          fi
+
+      - name: Install browsers on Linux
+        if: runner.os == 'Linux'
+        run: |
+          if [ ${{ matrix.browser }} == 'chrome' ]; then
+            sudo apt-get update
+            sudo apt-get install -y google-chrome-stable
+            sudo apt-get install -y chromium-chromedriver
+          elif [ ${{ matrix.browser }} == 'firefox' ]; then
+            sudo apt-get update
+            sudo apt-get install -y firefox
+            sudo apt-get install -y geckodriver
+          elif [ ${{ matrix.browser }} == 'edge' ]; then
+            sudo apt-get update
+            sudo apt-get install -y microsoft-edge-stable
+            sudo apt-get install -y msedgedriver
+          fi
 
       - name: Run Smoke Test
         run: |
